@@ -1,0 +1,1761 @@
+Skip to content
+CodeOfaNinja
+CodeOfaNinja
+Home
+Tutorials
+Subscribe
+About Us
+Tools
+JavaScript CRUD Tutorial – Step by Step Guide!
+
+
+Previously, we learned how to create a simple REST API in PHP. Today, we are going to learn how to create or insert, read, update and delete records with our JavaScript CRUD tutorial. We will use JavaScript, JSON, and PHP.
+
+Contents [hide]
+
+1 Overview
+2 Program Output – PHP AJAX CRUD Tutorial
+3 Set Up The REST API
+4 Basic Files & Folders
+4.1 File Structure
+4.2 Create index.html file
+4.3 Create custom CSS file
+4.4 Use jQuery, Bootstrap, and Bootbox.js libraries
+4.5 Create app.js file
+4.6 Create “products” scripts
+4.7 Output
+5 How To Read JSON Data Using jQuery AJAX?
+5.1 Show products on first page load
+5.2 Show products on click of a button
+5.3 Create showProducts() function
+5.4 Get list of products
+5.5 Add “Create Product” button
+5.6 Build HTML table
+5.7 Build table row per record
+5.8 Inject to page content
+5.9 5.9 Change page title
+5.10 Output
+6 How To Create or Insert Data Using jQuery AJAX?
+6.1 Handle “Create Product” Button Click
+6.2 Get list of categories from API
+6.3 Build “categories option” select field
+6.4 Add “Read Products” button
+6.5 Build “Create Product” HTML Form
+6.6 Show “Create Product” form and change page title
+6.7 Handle “create product” form submit
+6.8 Get form data
+6.9 Output
+7 How To Read One Data Using jQuery AJAX?
+7.1 Handle “read one” button click
+7.2 Get product ID
+7.3 Read one record from API
+7.4 Add “read products” button
+7.5 Show record data in HTML table
+7.6 Show “Read One Product” HTML table and change page title
+7.7 Output
+8 How To Update Data Using jQuery AJAX?
+8.1 Handle “udpate product” button click
+8.2 8.2 Get product ID
+8.3 Read product information
+8.4 Get list of categories
+8.5 Add “Read Products” button
+8.6 Build “Update Product” form
+8.7 Show “Update Product” form and change page title
+8.8 Handle “udpate product” form submission
+8.9 Get form data
+8.10 Send form data to server
+8.11 Output
+9 How To Delete Data Using AJAX?
+9.1 Handle “Delete Product” button click
+9.2 Get product ID
+9.3 Show “delete confirmation” dialog box
+9.4 Delete record using API
+9.5 Output
+10 How To Search Data Using jQuery AJAX?
+10.1 Include two JS file in index.html
+10.2 Create products.js file
+10.3 Create search-product.js file
+10.4 Change read-products.js
+10.5 Output
+11 How To Paginate Data Using jQuery AJAX?
+11.1 Change JSON URL
+11.2 Show products using JSON URL
+11.3 Add Pagination HTML
+11.4 Output
+12 How To Run The Source Code?
+13 Download LEVEL 1 Source Code
+14 Download LEVEL 2 Source Code
+15 Download LEVEL 3 Source Code
+16 Why download?
+17 What’s Next?
+18 Related Tutorials
+19 Some Notes
+19.1 Found An Issue?
+19.2 Subscribe to CodeOfaNinja
+19.3 Thank You!
+19.4 Share our tutorial
+Overview
+What Is AJAX? It stands for “Asynchronous JavaScript and XML“.
+
+I’ll try to explain it in the simplest way: Using AJAX will prevent re-loading the whole page for every button click you make. As a result, it makes the user experience better. Your web app will be faster.
+
+Ajax is not a technology, but a group of technologies. This can include HTML, CSS, JavaScript, and server-side scripting like PHP.
+
+I highly recommend studying the previous tutorials first before proceeding here. But if you think you can take this one, then go on.
+
+This tutorial will focus on creating, reading, updating, and deleting database records. We will do it using JavaScript, JSON, and PHP.
+
+jQuery will help us with the AJAX part. JSON data will be handled by the REST API built using PHP.
+
+Program Output – PHP AJAX CRUD Tutorial
+Below are the screenshots of our tutorial’s final result. You can click an image to view the larger version of it.
+
+
+Create a record.
+
+Read list of records.
+
+Read one record.
+
+
+When delete button was clicked.
+Let’s proceed to the step-by-step tutorial of our LEVEL 1 source code. Enjoy!
+
+Set Up The REST API
+In this tutorial, we are going to use a REST API built with PHP.
+
+We did not include REST API source code because we want you to focus on learning how to code with AJAX, not PHP.
+
+But the good news is, we made a separate tutorial about how to build a simple REST API with PHP. Click here to learn the step-by-step PHP REST API tutorial.
+
+I highly recommend learning our REST API tutorial first. This is because we are going to use that API for the rest of this tutorial.
+
+But if you already have your own REST API that will work with this tutorial, that’s okay as well.
+
+In my case, one example where I can access the REST API is: http://localhost/api/product/read.php
+
+That link will show me the list of products from the database, in JSON format. It looks like the following screenshot.
+
+
+The data above will be consumed by our AJAX app. The list of products will be displayed in the Bootstrap table with buttons like “Read One”, “Update” and “Delete”. You will see it in the “How To Read JSON Data Using jQuery AJAX?” section of this tutorial.
+
+By the way, I’m using a Chrome extension called JSONView to make the JSON data readable in the browser.
+
+Basic Files & Folders
+File Structure
+We will have the following files and folders at the end of this LEVEL 1 source code tutorial.
+
+├─ app/
+├─── assets/
+├────── css/
+├───────── style.css
+├────── js/
+├───────── bootbox.min.js
+├───────── jquery.js
+├─── products/
+├────── create-product.js
+├────── delete-product.js
+├────── read-one-product.js
+├────── read-products.js
+├────── update-product.js
+├─── app.js
+├─ index.html
+
+On the next sections, we will start creating the files and folders to achieve the one above.
+
+Create index.html file
+Create index.html file on your project’s main folder. Open that file and put the following code.
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+ 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+ 
+    <title>Read Products</title>
+ 
+    <!-- bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+ 
+    <!-- custom CSS -->
+    <link href="app/assets/css/style.css" rel="stylesheet" />
+ 
+</head>
+<body>
+ 
+<!-- our app will be injected here -->
+<div id="app"></div>
+ 
+<!-- jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ 
+<!-- bootstrap JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous">
+    </script>
+ 
+<!-- bootbox for confirm pop up -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
+ 
+<!-- app js script -->
+<script src="app/app.js"></script>
+ 
+<!-- products scripts -->
+<script src="app/products/read-products.js"></script>
+<script src="app/products/create-product.js"></script>
+<script src="app/products/read-one-product.js"></script>
+<script src="app/products/update-product.js"></script>
+<script src="app/products/delete-product.js"></script>
+ 
+</body>
+</html>
+Create custom CSS file
+Create “app” folder.
+Open the “app” folder and create the “assets” folder.
+Open the “assets” folder and create the “css” folder.
+Open the “css” folder and create “style.css” file.
+The “style.css" file is our custom CSS file. You can put any CSS in this file for additional web page styling. In our case, we have the following CSS code inside the “style.css” file.
+
+.m-r-10px{ margin-right:10px; }
+.m-b-10px{ margin-bottom:10px; }
+.m-b-15px{ margin-bottom:15px; }
+.m-b-20px{ margin-bottom:20px; }
+.w-5-pct{ width:5%; }
+.w-10-pct{ width:10%; }
+.w-15-pct{ width:15%; }
+.w-20-pct{ width:20%; }
+.w-25-pct{ width:25%; }
+.w-30-pct{ width:30%; }
+.w-35-pct{ width:35%; }
+.w-40-pct{ width:40%; }
+.w-45-pct{ width:45%; }
+.w-50-pct{ width:50%; }
+.w-55-pct{ width:55%; }
+.w-60-pct{ width:60%; }
+.w-65-pct{ width:65%; }
+.w-70-pct{ width:70%; }
+.w-75-pct{ width:75%; }
+.w-80-pct{ width:80%; }
+.w-85-pct{ width:85%; }
+.w-90-pct{ width:90%; }
+.w-95-pct{ width:95%; }
+.w-100-pct{ width:100%; }
+.display-none{ display:none; }
+.padding-bottom-2em{ padding-bottom:2em; }
+.width-30-pct{ width:30%; }
+.width-40-pct{ width:40%; }
+.overflow-hidden{ overflow:hidden; }
+.margin-right-1em{ margin-right:1em; }
+.right-margin{ margin:0 .5em 0 0; }
+.margin-bottom-1em { margin-bottom:1em; }
+.margin-zero{ margin:0; }
+.text-align-center{ text-align:center; }
+Use jQuery, Bootstrap, and Bootbox.js libraries
+As you can see in the index.html file, we are using jQuery and Bootbox.js libraries.
+
+jQuery JavaScript library is needed to make it easy for us to control interactions like button click and form submission. In this tutorial, we are using jQuery version 3.6.0. jQuery CDN is here.
+
+Bootstrap makes it easy for us to have a good-looking user interface. We are using Bootstrap version 3.3.7 in this tutorial. Bootstrap CDN is here.
+
+Bootbox.js library is needed to make the “delete” confirmation dialog box look better. We are using Bootbox.js version 4.4.0 in this tutorial. Bootbox.js CDN is here.
+
+Create app.js file
+The “app.js” file contains some basic HTML and JavaScript functions that can be used by other JS files in our app.
+
+Open “app” folder.
+Inside that “app” folder, create “app.js” file.
+Open “app.js” file and put the following code.
+$(document).ready(function(){
+ 
+    // app html
+    var app_html=`
+        <div class='container'>
+ 
+            <div class='page-header'>
+                <h1 id='page-title'>Read Products</h1>
+            </div>
+ 
+            <!-- this is where the contents will be shown. -->
+            <div id='page-content'></div>
+ 
+        </div>`;
+ 
+    // inject to 'app' in index.html
+    $("#app").html(app_html);
+ 
+});
+ 
+// change page title
+function changePageTitle(page_title){
+ 
+    // change page title
+    $('#page-title').text(page_title);
+ 
+    // change title tag
+    document.title=page_title;
+}
+ 
+// function to make form values to json format
+$.fn.serializeObject = function()
+{
+    var o = {};
+    var a = this.serializeArray();
+    $.each(a, function() {
+        if (o[this.name] !== undefined) {
+            if (!o[this.name].push) {
+                o[this.name] = [o[this.name]];
+            }
+            o[this.name].push(this.value || '');
+        } else {
+            o[this.name] = this.value || '';
+        }
+    });
+    return o;
+};
+Create “products” scripts
+Now, we will create several JavaScript files.
+
+Open “app” folder.
+Create “products” folder inside “app” folder.
+Create the following files inside “products” folder:
+read-products.js
+create-product.js
+read-one-product.js
+update-product.js
+delete-product.js
+What’s the code inside the JavaScript files above? For now, we will leave them empty. But we will fill them out in the next several sections of this tutorial.
+
+Output
+Our code so far will have almost empty output. It should look like the following.
+
+
+How To Read JSON Data Using jQuery AJAX?
+Show products on first page load
+Open “app” folder.
+Open “products” folder inside the “app” folder.
+Open read-products.js file inside the “products” folder.
+The following code will call the showProducts() method on first load of the web page.
+
+The showProducts() will show the list of products in an HTML table. Put the following code inside read-products.js file.
+
+$(document).ready(function(){
+ 
+    // show list of product on first load
+    showProducts();
+ 
+});
+ 
+// showProducts() method will be here
+Show products on click of a button
+The following code will call showProducts() method in a click of a button with read-products-button class.
+
+The button can be found in the “create product” and “update product” HTML template. We will see it in the next sections.
+
+Put the following code under the showProducts(); of the previous section.
+
+// when a 'read products' button was clicked
+$(document).on('click', '.read-products-button', function(){
+    showProducts();
+});
+Create showProducts() function
+Now we will create the showProducts() method. Replace // showProducts() method will be here comment in read-products.js file with the following code.
+
+// function to show list of products
+function showProducts(){
+ 
+}
+Get list of products
+The following code will contact our API to get the list of products in JSON format. Put the following code after the opening curly brace of the previous section.
+
+// get list of products from the API
+$.getJSON("http://localhost/api/product/read.php", function(data){
+ 
+});
+Add “Create Product” button
+We have to add a “Create Product” button in the “products list” view. We will make this button work later in this tutorial.
+
+Place the following code after the opening curly brace of the previous section.
+
+// html for listing products
+var read_products_html=`
+    <!-- when clicked, it will load the create product form -->
+    <div id='create-product' class='btn btn-primary pull-right m-b-15px create-product-button'>
+        <span class='glyphicon glyphicon-plus'></span> Create Product
+    </div>
+Build HTML table
+We have to start building the HTML table where the list of products will appear.
+
+The following code will build an HTML table with its heading. Place it after the previous section’s code.
+
+<!-- start table -->
+<table class='table table-bordered table-hover'>
+ 
+    <!-- creating our table heading -->
+    <tr>
+        <th class='w-25-pct'>Name</th>
+        <th class='w-10-pct'>Price</th>
+        <th class='w-15-pct'>Category</th>
+        <th class='w-25-pct text-align-center'>Action</th>
+    </tr>`;
+ 
+    // rows will be here
+ 
+// end table
+read_products_html+=`</table>`;
+Build table row per record
+We will loop through each record returned by the API. In each record, we will create a table row.
+
+Aside from product data, the table row will have the “action” buttons as well. These include the “Read One”, “Edit” and “Delete” buttons.
+
+Replace “// rows will be here” comment of the previous section with the following code.
+
+// loop through returned list of data
+$.each(data.records, function(key, val) {
+ 
+    // creating new table row per record
+    read_products_html+=`
+        <tr>
+ 
+            <td>` + val.name + `</td>
+            <td>$` + val.price + `</td>
+            <td>` + val.category_name + `</td>
+ 
+            <!-- 'action' buttons -->
+            <td>
+                <!-- read product button -->
+                <button class='btn btn-primary m-r-10px read-one-product-button' data-id='` + val.id + `'>
+                    <span class='glyphicon glyphicon-eye-open'></span> Read
+                </button>
+ 
+                <!-- edit button -->
+                <button class='btn btn-info m-r-10px update-product-button' data-id='` + val.id + `'>
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </button>
+ 
+                <!-- delete button -->
+                <button class='btn btn-danger delete-product-button' data-id='` + val.id + `'>
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </button>
+            </td>
+ 
+        </tr>`;
+});
+Inject to page content
+We have to make the HTML table appear on our webpage. We will do this by injecting the table into the “page-content” div.
+
+Place the following code after the closing “table” tag
+
+// inject to 'page-content' of our app
+$("#page-content").html(read_products_html);
+5.9 Change page title
+The following code will change the “title” seen on the web page and the “title” seen on the browser tab.
+
+Place the following code after the previous section’s code.
+
+// chage page title
+changePageTitle("Read Products");
+Output
+After doing all the steps above, the output should look like the following.
+
+
+How To Create or Insert Data Using jQuery AJAX?
+Handle “Create Product” Button Click
+Open “app” folder.
+Open “products” folder inside the “app” folder.
+Open create-product.js file inside the “products” folder.
+The following code will handle a click of a button. This button should have “create-product-button” class.
+
+Place the following code inside create-product.js file.
+
+$(document).ready(function(){
+ 
+    // show html form when 'create product' button was clicked
+    $(document).on('click', '.create-product-button', function(){
+        // categories api call will be here
+    });
+ 
+    // 'create product form' handle will be here
+});
+Get list of categories from API
+We need to get list of categories from the API because we will build the “categories” select field. This is where the user can select the category of the product.
+
+Replace “// categories api call will be here” of the previous section with the following code.
+
+// load list of categories
+$.getJSON("http://localhost/api/category/read.php", function(data){
+ 
+});
+Build “categories option” select field
+This is where we build the HTML “select” field with the “categories” option.
+
+Place the following code after the opening curly brace of the previous section.
+
+// build categories option html
+// loop through returned list of data
+var categories_options_html=`<select name='category_id' class='form-control'>`;
+$.each(data.records, function(key, val){
+    categories_options_html+=`<option value='` + val.id + `'>` + val.name + `</option>`;
+});
+categories_options_html+=`</select>`;
+Add “Read Products” button
+The “read products” button is needed so that we can go back to the products list.
+
+Place the following code after the previous section’s code.
+
+// we have our html form here where product information will be entered
+// we used the 'required' html5 property to prevent empty fields
+var create_product_html=`
+ 
+    <!-- 'read products' button to show list of products -->
+    <div id='read-products' class='btn btn-primary pull-right m-b-15px read-products-button'>
+        <span class='glyphicon glyphicon-list'></span> Read Products
+    </div>
+Build “Create Product” HTML Form
+Now we will build the actual “creat product” HTML form. This is where the user can enter the new product information that will be sent to the server.
+
+Place the following code after the previous section’s code.
+
+<!-- 'create product' html form -->
+<form id='create-product-form' action='#' method='post' border='0'>
+    <table class='table table-hover table-responsive table-bordered'>
+ 
+        <!-- name field -->
+        <tr>
+            <td>Name</td>
+            <td><input type='text' name='name' class='form-control' required /></td>
+        </tr>
+ 
+        <!-- price field -->
+        <tr>
+            <td>Price</td>
+            <td><input type='number' min='1' name='price' class='form-control' required /></td>
+        </tr>
+ 
+        <!-- description field -->
+        <tr>
+            <td>Description</td>
+            <td><textarea name='description' class='form-control' required></textarea></td>
+        </tr>
+ 
+        <!-- categories 'select' field -->
+        <tr>
+            <td>Category</td>
+            <td>` + categories_options_html + `</td>
+        </tr>
+ 
+        <!-- button to submit form -->
+        <tr>
+            <td></td>
+            <td>
+                <button type='submit' class='btn btn-primary'>
+                    <span class='glyphicon glyphicon-plus'></span> Create Product
+                </button>
+            </td>
+        </tr>
+ 
+    </table>
+</form>`;
+Show “Create Product” form and change page title
+We have to make the HTML button and form appear on our web page. We will change the page title as well.
+
+Place the following code after the previous section’s code.
+
+// inject html to 'page-content' of our app
+$("#page-content").html(create_product_html);
+ 
+// chage page title
+changePageTitle("Create Product");
+Handle “create product” form submit
+If the “create product” form is submitted, we need a script to handle it.
+
+Find “// 'create product form' handle will be here” and replace it with the following code.
+
+// will run if create product form was submitted
+$(document).on('submit', '#create-product-form', function(){
+    // form data will be here
+});
+Get form data
+This is how we get data entered in our “create product” HTML form.
+
+Replace “// form data will be here” of the previous section with the following code.
+
+// get form data
+var form_data=JSON.stringify($(this).serializeObject());
+Now we will send the data to the server.
+
+Place the following code after the previous section’s code.
+
+// submit form data to api
+$.ajax({
+    url: "http://localhost/api/product/create.php",
+    type : "POST",
+    contentType : 'application/json',
+    data : form_data,
+    success : function(result) {
+        // product was created, go back to products list
+        showProducts();
+    },
+    error: function(xhr, resp, text) {
+        // show error to console
+        console.log(xhr, resp, text);
+    }
+});
+ 
+return false;
+Output
+The output should look like the following.
+
+
+How To Read One Data Using jQuery AJAX?
+Handle “read one” button click
+The “read one” button is seen on the “product list” view. When click, it should show the complete product details.
+
+Open “app” folder.
+Inside the “app” folder, open “products” folder.
+Inside the “products” folder, open “read-one-product.js” file.
+Place the following code inside “read-one-product.js” file.
+
+$(document).ready(function(){
+ 
+    // handle 'read one' button click
+    $(document).on('click', '.read-one-product-button', function(){
+        // product ID will be here
+    });
+ 
+});
+Get product ID
+Our script need to identify the record to be read. We do it by getting the product ID.
+
+Replace “// product ID will be here” of the previous section with the following code.
+
+// get product id
+var id = $(this).attr('data-id');
+Read one record from API
+We will send the product ID to the API. It will return the data based on the given ID.
+
+Place the following code after the previous section’s code.
+
+// read product record based on given ID
+$.getJSON("http://localhost/api/product/read_one.php?id=" + id, function(data){
+    // read products button will be here
+});
+Add “read products” button
+We need the “read products” button so we can go back to the products list.
+
+Replace “// read products button will be here” of the previous section with the following code.
+
+// start html
+var read_one_product_html=`
+ 
+    <!-- when clicked, it will show the product's list -->
+    <div id='read-products' class='btn btn-primary pull-right m-b-15px read-products-button'>
+        <span class='glyphicon glyphicon-list'></span> Read Products
+    </div>
+Show record data in HTML table
+We will place the product information returned by the API to an HTML table.
+
+Place the following code after the previous section’s code.
+
+<!-- product data will be shown in this table -->
+<table class='table table-bordered table-hover'>
+ 
+    <!-- product name -->
+    <tr>
+        <td class='w-30-pct'>Name</td>
+        <td class='w-70-pct'>` + data.name + `</td>
+    </tr>
+ 
+    <!-- product price -->
+    <tr>
+        <td>Price</td>
+        <td>` + data.price + `</td>
+    </tr>
+ 
+    <!-- product description -->
+    <tr>
+        <td>Description</td>
+        <td>` + data.description + `</td>
+    </tr>
+ 
+    <!-- product category name -->
+    <tr>
+        <td>Category</td>
+        <td>` + data.category_name + `</td>
+    </tr>
+ 
+</table>`;
+Show “Read One Product” HTML table and change page title
+We have to make the HTML button and table appear on our web page. We will change the page title as well.
+
+Place the following code after the previous section’s code.
+
+// inject html to 'page-content' of our app
+$("#page-content").html(read_one_product_html);
+ 
+// chage page title
+changePageTitle("Create Product");
+Output
+The output should look like the following.
+
+
+How To Update Data Using jQuery AJAX?
+Handle “udpate product” button click
+The “edit” button is seen on the “product list” view. When click, it should show the “update product” form filled out with product information.
+
+Open “app” folder.
+Inside the “app” folder, open “products” folder.
+Inside the “products” folder, open “update-product.js” file.
+Place the following code inside “update-product.js” file.
+
+$(document).ready(function(){
+ 
+    // show html form when 'update product' button was clicked
+    $(document).on('click', '.update-product-button', function(){
+        // product ID will be here
+    });
+ 
+    // 'update product form' submit handle will be here
+});
+8.2 Get product ID
+Our script need to identify the record to be read. We do it by getting the product ID.
+
+Replace “// product ID will be here” of the previous section with the following code.
+
+// get product id
+var id = $(this).attr('data-id');
+Read product information
+To fill out our “update product” HTML form, we need to get product information from the API.
+
+Place the following code after the previous section’s code.
+
+// read one record based on given product id
+$.getJSON("http://localhost/api/product/read_one.php?id=" + id, function(data){
+ 
+    // values will be used to fill out our form
+    var name = data.name;
+    var price = data.price;
+    var description = data.description;
+    var category_id = data.category_id;
+    var category_name = data.category_name;
+ 
+    // load list of categories will be here
+});
+Get list of categories
+A list of categories is needed for product category options. Category records will be rendered as options in a “select” HTML input field.
+
+Replace “// load list of categories will be here” of the previous section with the following code.
+
+// load list of categories
+$.getJSON("http://localhost/api/category/read.php", function(data){
+ 
+    // build 'categories option' html
+    // loop through returned list of data
+        var categories_options_html=`<select name='category_id' class='form-control'>`;
+ 
+        $.each(data.records, function(key, val){
+            // pre-select option is category id is the same
+            if(val.id==category_id){ categories_options_html+=`<option value='` + val.id + `' selected>` + val.name + `</option>`; }
+ 
+            else{ categories_options_html+=`<option value='` + val.id + `'>` + val.name + `</option>`; }
+        });
+        categories_options_html+=`</select>`;
+ 
+    // update product html will be here
+});
+Add “Read Products” button
+The “read products” button is needed so that we can go back to the products list.
+
+Replace “// update product html will be here” of the previous section with the following code.
+
+// store 'update product' html to this variable
+var update_product_html=`
+    <div id='read-products' class='btn btn-primary pull-right m-b-15px read-products-button'>
+        <span class='glyphicon glyphicon-list'></span> Read Products
+    </div>
+Build “Update Product” form
+Now we will build the “update product” HTML form. This form will be built with an HTML table and the input fields are filled out with product information.
+
+Place the following code after the previous section’s code.
+
+<!-- build 'update product' html form -->
+<!-- we used the 'required' html5 property to prevent empty fields -->
+<form id='update-product-form' action='#' method='post' border='0'>
+    <table class='table table-hover table-responsive table-bordered'>
+ 
+        <!-- name field -->
+        <tr>
+            <td>Name</td>
+            <td><input value=\"` + name + `\" type='text' name='name' class='form-control' required /></td>
+        </tr>
+ 
+        <!-- price field -->
+        <tr>
+            <td>Price</td>
+            <td><input value=\"` + price + `\" type='number' min='1' name='price' class='form-control' required /></td>
+        </tr>
+ 
+        <!-- description field -->
+        <tr>
+            <td>Description</td>
+            <td><textarea name='description' class='form-control' required>` + description + `</textarea></td>
+        </tr>
+ 
+        <!-- categories 'select' field -->
+        <tr>
+            <td>Category</td>
+            <td>` + categories_options_html + `</td>
+        </tr>
+ 
+        <tr>
+ 
+            <!-- hidden 'product id' to identify which record to delete -->
+            <td><input value=\"` + id + `\" name='id' type='hidden' /></td>
+ 
+            <!-- button to submit form -->
+            <td>
+                <button type='submit' class='btn btn-info'>
+                    <span class='glyphicon glyphicon-edit'></span> Update Product
+                </button>
+            </td>
+ 
+        </tr>
+ 
+    </table>
+</form>`;
+Show “Update Product” form and change page title
+We need to show our “update product” HTML on our webpage. We will change the page title as well.
+
+Put the following code after the previous section’s code.
+
+// inject to 'page-content' of our app
+$("#page-content").html(update_product_html);
+ 
+// chage page title
+changePageTitle("Update Product");
+Handle “udpate product” form submission
+If the “update product” form is submitted, we need a script to handle it.
+
+Find “// 'update product form‘ submit handle will be here” and replace it with the following code.
+
+// will run if 'create product' form was submitted
+$(document).on('submit', '#update-product-form', function(){
+ 
+    // get form data will be here 
+ 
+    return false;
+});
+Get form data
+We will get the product information from our “update product” HTML form.
+
+Replace “// get form data will be here” of the previous section with the following code.
+
+// get form data
+var form_data=JSON.stringify($(this).serializeObject());
+Send form data to server
+After getting the form data, we will send the data to our API.
+
+Place the following code after the previous section’s code.
+
+// submit form data to api
+$.ajax({
+    url: "http://localhost/api/product/update.php",
+    type : "POST",
+    contentType : 'application/json',
+    data : form_data,
+    success : function(result) {
+        // product was created, go back to products list
+        showProducts();
+    },
+    error: function(xhr, resp, text) {
+        // show error to console
+        console.log(xhr, resp, text);
+    }
+});
+Output
+The output should look like the following.
+
+
+How To Delete Data Using AJAX?
+Handle “Delete Product” button click
+The “delete product” button is seen in the “read products” view. When it was clicked, we need to handle it.
+
+Open “app” folder.
+Inside the “app” folder, open “products” folder.
+Inside the “products” folder, open “delete-product.js” file.
+Place the following code inside “delete-product.js” file.
+
+$(document).ready(function(){
+ 
+    // will run if the delete button was clicked
+    $(document).on('click', '.delete-product-button', function(){
+        // product id will be here
+    });
+});
+Get product ID
+The product ID is needed to identify which record to delete using the API.
+
+Replace “// product id will be here” of the previous section with the following code.
+
+// get the product id
+var product_id = $(this).attr('data-id');
+Show “delete confirmation” dialog box
+This is where we will use the Bootbox.js library. We will show a dialog box with “Are you sure?” message with “Yes” and “No” buttons.
+
+Place the following code after the previous section’s code.
+
+// bootbox for good looking 'confirm pop up'
+bootbox.confirm({
+ 
+    message: "<h4>Are you sure?</h4>",
+    buttons: {
+        confirm: {
+            label: '<span class="glyphicon glyphicon-ok"></span> Yes',
+            className: 'btn-danger'
+        },
+        cancel: {
+            label: '<span class="glyphicon glyphicon-remove"></span> No',
+            className: 'btn-primary'
+        }
+    },
+    callback: function (result) {
+        // delete request will be here
+    }
+});
+Delete record using API
+If the user clicked “Yes” on the dialog box, a “delete” request will be sent to the API.
+
+Replace “// delete request will be here” of the previous section with the following code.
+
+if(result==true){
+ 
+    // send delete request to api / remote server
+    $.ajax({
+        url: "http://localhost/api/product/delete.php",
+        type : "POST",
+        dataType : 'json',
+        data : JSON.stringify({ id: product_id }),
+        success : function(result) {
+ 
+            // re-load list of products
+            showProducts();
+        },
+        error: function(xhr, resp, text) {
+            console.log(xhr, resp, text);
+        }
+    });
+ 
+}
+Output
+
+How To Search Data Using jQuery AJAX?
+This feature is part of our LEVEL 2 source code.
+
+Include two JS file in index.html
+<!-- products scripts -->
+<script src="app/products/products.js"></script>
+<script src="app/products/search-product.js"></script>
+Create products.js file
+The “products.js” file will contain any functions that can be used by other product components like our “read-products.js” or “search-products.js” files.
+
+Open “app” folder. Open “products” folder. Create “products.js” file.
+
+Open the “products.js” file and put the following code.
+
+// product list html
+function readProductsTemplate(data, keywords){
+ 
+    var read_products_html=`
+        <!-- search products form -->
+        <form id='search-product-form' action='#' method='post'>
+        <div class='input-group pull-left w-30-pct'>
+ 
+            <input type='text' value='` + keywords + `' name='keywords' class='form-control product-search-keywords' placeholder='Search products...' />
+ 
+            <span class='input-group-btn'>
+                <button type='submit' class='btn btn-default' type='button'>
+                    <span class='glyphicon glyphicon-search'></span>
+                </button>
+            </span>
+ 
+        </div>
+        </form>
+ 
+        <!-- when clicked, it will load the create product form -->
+        <div id='create-product' class='btn btn-primary pull-right m-b-15px create-product-button'>
+            <span class='glyphicon glyphicon-plus'></span> Create Product
+        </div>
+ 
+        <!-- start table -->
+        <table class='table table-bordered table-hover'>
+ 
+            <!-- creating our table heading -->
+            <tr>
+                <th class='w-25-pct'>Name</th>
+                <th class='w-10-pct'>Price</th>
+                <th class='w-15-pct'>Category</th>
+                <th class='w-25-pct text-align-center'>Action</th>
+            </tr>`;
+ 
+    // loop through returned list of data
+    $.each(data.records, function(key, val) {
+ 
+        // creating new table row per record
+        read_products_html+=`<tr>
+ 
+            <td>` + val.name + `</td>
+            <td>$` + val.price + `</td>
+            <td>` + val.category_name + `</td>
+ 
+            <!-- 'action' buttons -->
+            <td>
+                <!-- read product button -->
+                <button class='btn btn-primary m-r-10px read-one-product-button' data-id='` + val.id + `'>
+                    <span class='glyphicon glyphicon-eye-open'></span> Read
+                </button>
+ 
+                <!-- edit button -->
+                <button class='btn btn-info m-r-10px update-product-button' data-id='` + val.id + `'>
+                    <span class='glyphicon glyphicon-edit'></span> Edit
+                </button>
+ 
+                <!-- delete button -->
+                <button class='btn btn-danger delete-product-button' data-id='` + val.id + `'>
+                    <span class='glyphicon glyphicon-remove'></span> Delete
+                </button>
+            </td>
+        </tr>`;
+    });
+ 
+    // end table
+    read_products_html+=`</table>`;
+ 
+    // inject to 'page-content' of our app
+    $("#page-content").html(read_products_html);
+}
+Create search-product.js file
+The “search-product.js” file will contain a code that catches the submission of the “search product” form.
+
+Open “app” folder. Open the “products” folder. Create “search-products.js” file.
+
+Open the “search-products.js” file and put the following code.
+
+$(document).ready(function(){
+ 
+    // when a 'search products' button was clicked
+    $(document).on('submit', '#search-product-form', function(){
+ 
+        // get search keywords
+        var keywords = $(this).find(":input[name='keywords']").val();
+ 
+        // get data from the api based on search keywords
+        $.getJSON("http://localhost/api/product/search.php?s=" + keywords, function(data){
+ 
+            // template in products.js
+            readProductsTemplate(data, keywords);
+ 
+            // chage page title
+            changePageTitle("Search products: " + keywords);
+ 
+        });
+ 
+        // prevent whole page reload
+        return false;
+    });
+ 
+});
+Change read-products.js
+We want the “product list” and “search product” to have the same HTML table template. To do this, we will use the readProductsTemplate() function of the products.js file.
+
+Open “app” folder. Open “products” folder. Open the “read-products.js’ file. Change the showProducts() function to the following code.
+
+// function to show list of products
+function showProducts(){
+ 
+    // get list of products from the API
+    $.getJSON("http://localhost/api/product/read.php", function(data){
+ 
+        // html for listing products
+        readProductsTemplate(data, "");
+ 
+        // chage page title
+        changePageTitle("Read Products");
+ 
+    });
+}
+Output
+
+How To Paginate Data Using jQuery AJAX?
+This feature is part of our LEVEL 2 and LEVEL 3 source codes.
+
+Change JSON URL
+To make pagination work, we’ll have to change the JSON URL. The contents of this new JSON data will include the “paging” node. It looks like the following.
+
+
+So we will change the JSON URL from:
+
+http://localhost/api/product/read.php
+to
+
+http://localhost/api/product/read_paging.php
+It means we have to change something in our code. See the change in the next section.
+
+Show products using JSON URL
+Open /app/products/read-products.js file. Replace the code with the following.
+
+$(document).ready(function(){
+ 
+    // show list of product on first load
+    showProductsFirstPage();
+ 
+    // when a 'read products' button was clicked
+    $(document).on('click', '.read-products-button', function(){
+        showProductsFirstPage();
+    });
+ 
+    // when a 'page' button was clicked
+    $(document).on('click', '.pagination li', function(){
+        // get json url
+        var json_url=$(this).find('a').attr('data-page');
+ 
+        // show list of products
+        showProducts(json_url);
+    });
+ 
+});
+ 
+function showProductsFirstPage(){
+    var json_url="http://localhost/api/product/read_paging.php";
+    showProducts(json_url);
+}
+ 
+// function to show list of products
+function showProducts(json_url){
+ 
+    // get list of products from the API
+    $.getJSON(json_url, function(data){
+ 
+        // html for listing products
+        readProductsTemplate(data, "");
+ 
+        // chage page title
+        changePageTitle("Read Products");
+ 
+    });
+}
+Add Pagination HTML
+Open /app/products/products.js file. Find the ending “table” tag and put the following code under it.
+
+// pagination
+if(data.paging){
+    read_products_html+="<ul class='pagination pull-left margin-zero padding-bottom-2em'>";
+ 
+        // first page
+        if(data.paging.first!=""){
+            read_products_html+="<li><a data-page='" + data.paging.first + "'>First Page</a></li>";
+        }
+ 
+        // loop through pages
+        $.each(data.paging.pages, function(key, val){
+            var active_page=val.current_page=="yes" ? "class='active'" : "";
+            read_products_html+="<li " + active_page + "><a data-page='" + val.url + "'>" + val.page + "</a></li>";
+        });
+ 
+        // last page
+        if(data.paging.last!=""){
+            read_products_html+="<li><a data-page='" + data.paging.last + "'>Last Page</a></li>";
+        }
+    read_products_html+="</ul>";
+}
+Output
+After making the changes above, run index.html again. Do a hard refresh. You should see the paging buttons like the one below.
+
+
+How To Run The Source Code?
+We highly recommend for you to follow and study our well-detailed, step-by-step tutorial above first. Nothing beats experience when it comes to learning.
+
+But we believe you will learn faster if you’ll see the final source code as well. We consider it as your additional guide.
+
+Imagine the value or skill upgrade it can bring you. The additional income you can get from your work, projects or business. The precious time you save. Isn’t that what you want?
+
+By now, you need to download our source codes. To do it, use any download buttons in the next few sections below.
+
+Once you downloaded the source codes, here’s how you can run it.
+
+Extract the files to your server directory.
+Set up the “api” by following the README.txt inside the “api” folder.
+Open your browser and run index.html
+If you can see the list of “product” records, it means your set up is correct.
+Download LEVEL 1 Source Code
+FEATURES	LEVEL 1
+Create product	YES
+Read product	YES
+Read one product	YES
+Update product	YES
+Delete product	YES
+Bootstrap UI	YES
+PHP REST API source code	YES
+FREE email support for 3 months	YES
+Source code updates via email	YES
+$20 – Download now
+Download LEVEL 2 Source Code
+FEATURES	LEVEL 2
+All features of LEVEL 1	YES
+Search products	YES
+Pagination of products & search products	YES
+Create category	YES
+Read category	YES
+Read one category	YES
+Update category	YES
+Delete category	YES
+Search categories	YES
+Pagination of categories & search categories	YES
+Navigation bar	YES
+FREE email support for 6 months	YES
+$40 – Download now
+Download LEVEL 3 Source Code
+FEATURES	LEVEL 3
+All features of LEVEL 2	YES
+Inline editing of products & categories	YES
+Export CSV of products & categories	YES
+Bootstrap tooltip on some products & categories buttons	YES
+FREE email support for 1 year	YES
+$50 – Download now
+Why download?
+Do you need more reasons to download it?
+
+MORE REASONS TO DOWNLOAD THE CODE	ALL
+Use new skills for your multiple projects	YES
+Save huge amount of time learning jQuery AJAX	YES
+Code examples are direct to the point	YES
+Well explained and commented source code	YES
+Fast and friendly email support	YES
+Free source code updates	YES
+What’s Next?
+Our next topic is a bit different: How To Display Facebook Page Events on Website using PHP?
+
+Related Tutorials
+We listed all our high quality full-stack web development tutorials here: Click here.
+Some Notes
+Found An Issue?
+
+If you found a problem with this code, please send us an email. Before you send an email, please read our our code of conduct. Our team's email address is support@codeofaninja.com
+
+
+Please be descriptive about your issue. Please provide the error messages, screenshots (or screen recording) and your test URL. Thanks!
+
+
+Subscribe to CodeOfaNinja
+
+Receive valuable web development tutorials to your email. Subscribe now for FREE!
+
+
+Name
+Email
+
+Thank You!
+Thanks for reading our AJAX CRUD Tutorial Using jQuery, JSON and PHP!
+
+Share our tutorial
+Click to share on LinkedIn (Opens in new window)Click to share on Twitter (Opens in new window)Click to share on Facebook (Opens in new window)Click to share on Pocket (Opens in new window)Click to share on Reddit (Opens in new window)Click to email a link to a friend (Opens in new window)Click to share on Telegram (Opens in new window)Click to share on WhatsApp (Opens in new window)Click to share on Skype (Opens in new window)Click to print (Opens in new window)Click to share on Tumblr (Opens in new window)
+Published June 2, 2015
+Categorized as JavaScript, tut - ajax crud
+Tagged featured, php crud, product
+ By Mike Dalisay
+I'm Mike Dalisay, a pro web developer since 2010. I love web development. Improving our tutorials and source codes makes me happy. Do you want to suggest an edit to our tutorial? Got something to ask about our source codes? You may use our comments section below or email our team at support@codeofaninja.com
+
+View all of Mike Dalisay's posts.
+64 comments
+jimmyJackson
+July 29, 2021 at 9:23 am
+Hi, Mike, how are you?
+Thanks for the tutorials. They’ve been most helpful.
+I’ve followed the SIMPLE REST MYSQL tutorial, the authentication tutorial that followed that and now I’m working on the PHP OOP AJAX CRUD tutorial. But, I’ve run into a bit of an issue.
+I’ve followed all the steps in the tutorial but nothing has ever displayed on the screen.
+
+I’m looking at your Bootstrap for beginners tutorial and I’m recognizing that must have something to do with the index.html file. But, I’m not certain what the problem with it could be.
+
+Could it be that the CDN source is too old and is no longer being used?
+I’m going to try a more recent CDN.
+
+I’m asking because I’m not seeing anything describing this problem on stack overflow or other websites.
+https://uploads.disquscdn.com/images/95969db4e4198eb75e9c59eb8063eeafeb26e840ef650d21f1a3d10cd392c373.pnghttps://uploads.disquscdn.com/images/d577ebb1586389d9c17eef09747d451e63054bbe71a7f732ea7c4e98789ceb9c.png
+
+Reply
+Mike Dalisay
+August 30, 2021 at 4:56 am
+Hi Jimmy, I’m doing great! How are you? Thank you for the kind words, I’m glad our tutorials were able to help with your coding journey!
+
+About the issue, I cannot reproduce it. Can you right click your page > click Inspect > click Console tab. Take a screenshot and send it here. We want to see an error message so we can know exactly how to solve it.
+
+Reply
+slowestJ'canIndeWorld
+July 29, 2021 at 4:56 pm
+I’m having a problem with my index.html file remaining totally blank.
+
+I’ve changed the bootstrap CDN to
+
+I’ve downloaded the bootbox master file from the github repository extracted it and placed it in the js folder in the assets folder. Is that what you meant by download bootbox? Because there is no link to bootbox.min.js on the link you gave.
+
+Also, the bootbox-master zip does NOT contain bootbox.min.js.
+
+I’m using this cdn as well for bootstrap Javascript.
+
+
+and finally I’m attempting to use bootstrap.js in the following way:-
+
+script src=”app/assets/js/bootbox-master/bootbox.js”
+
+I’m making these changes because I’m kind of desperate.
+
+I’ve followed two of your tutorials ..the Simple PHP MYSQL REST Service one..that went well.
+I adapted it to my own database and that seemed to go fine.
+I’ve tried the JWT JSON PHP REST service, authentication one and that went well as well
+But this one will not work at all.
+The only thing it has in common with your tutorial is the image at the very beginning when the JSON API is working.
+
+It’s been completely blank screens since then.
+I’m going to redo it..hopefully I will find my error.
+In the meantime, I made the changes listed out of sheer desperation because there does not seem to be a simple fix for this.
+
+Or at least there’s not one on Stack Overflow (but everything hints that this is a bootstrap problem.
+I’m runnning BunsenLabs Lithium, by the way, a Debian 10 distro.
+I’m using XAMPP as my webserver.
+
+I know it’s difficult but can you advise me re this problem, please?
+I’d appreciate your input when you have the time.
+
+Reply
+Mike Dalisay
+September 1, 2021 at 5:36 pm
+Hi @slowestjcanindeworld,
+
+Thank you for your comment! Here are my answers:
+
+1. In the tutorial above, we’re using an older version of Bootstrap. It works on my end without issues. If you need to upgrade your Bootstrap version, that’s okay.
+
+But when following our tutorial above, I would suggest you follow the exact version I’m using – to make it work first. After you make it work, that’s the time you can try to upgrade.
+
+2. About Bootbox, I changed it to a CDN. The same with jQuery. No need to download anything. See my update above.
+
+3. I added screenshots of my output above. It does not show an empty page.
+
+Reply
+Mike Dalisay
+August 25, 2018 at 6:48 pm
+Hi @sheej, thank you for sharing your experience and solution! I appreciate it. This will be helpful for Mac users like yourself.
+
+Reply
+Mike Dalisay
+August 25, 2018 at 6:34 pm
+Hi @jason, you can put the contents of create products on your index page.
+
+Reply
+Steve Janssen
+July 30, 2018 at 6:01 pm
+Where can i find the tutorial for Level 3?
+
+Inline editing of products & categories
+Export CSV of products & categories
+Bootstrap Tooltips
+
+Reply
+Mike Dalisay
+July 31, 2018 at 9:14 am
+Hi @disqus_jOu97V5UXn, we only have tutorial for LEVEL 1 source code.
+
+Reply
+Mike Dalisay
+July 15, 2018 at 12:35 am
+Hi @walidslougui, please make sure your API in this link is working: http://localhost/api_restful_project/api/category/read.php
+
+If it is working, would you send us a screenshot?
+
+Reply
+Mike Dalisay
+June 7, 2018 at 5:09 pm
+Hi @elisemandl, there is a way to do it. We will try to release a tutorial regarding this topic, please subscribe so we can let you know, see: https://www.codeofaninja.com/subscribe
+
+Reply
+Bhavesh Agrawal
+February 28, 2018 at 1:01 pm
+I m having this error..!!!
+
+showProducts() not defined
+
+$(document).on(‘submit’, ‘#create-product-form’, function()
+{
+var form_data = JSON.stringify($(this).serializeObject());
+
+$.ajax({
+url: “http://localhost/api/product/create.php”,
+type : “POST”,
+contentType : ‘application/json’,
+data : form_data,
+success : function(result)
+{
+showProducts();
+},
+error: function(xhr, resp, text)
+{
+console.error(xhr, resp, text);
+}
+});
+
+return false;
+});
+
+Reply
+Mike Dalisay
+March 16, 2018 at 10:15 am
+Hi @disqus_enalBuyhwa, the showProducts() function was created in section 5.3, please make sure you did not miss it.
+
+Reply
+PT
+February 15, 2018 at 4:57 pm
+Thank you for this very good tutorial! :) I am just trying to figure out how to prevent anyone from altering my data? I mean I am building a website based on this, and I only want myself to be able to add, update and delete data in the DB.. should I just leave those parts out and move them to some secret folder behind password?
+
+Reply
+Mike Dalisay
+February 15, 2018 at 11:18 pm
+Hi @WAX1, you’re welcome and thanks for the kind words! In that case, yes, you can do what you suggested. Another option is to build your own login system. Unfortunately, we don’t have an AJAX tutorial about that yet. But this might help you https://www.codeofaninja.com/2013/03/php-login-script.html
+
+Reply
+Parveen Shaikh
+February 15, 2018 at 3:49 am
+Fab Works
+
+Reply
+Mike Dalisay
+February 15, 2018 at 11:17 pm
+You’re welcome @disqus_FPw3QlwjBu! Please share our site to your friends. :)
+
+Reply
+brad willy
+January 16, 2018 at 4:25 pm
+I am getting this error:
+jQuery.Deferred exception: read_products_html is not defined ReferenceError: read_products_html is not defined
+at showProducts (http://localhost/app/products/delete-product.js:25:1)
+at HTMLDocument. (http://localhost/app/products/read-products.js:6:5)
+at j (http://localhost/app/assets/js/jquery-3.2.1.min.js:2:29999)
+at k (http://localhost/app/assets/js/jquery-3.2.1.min.js:2:30313) undefined
+
+Reply
+Mike Dalisay
+January 22, 2018 at 7:41 am
+Hi @bradwilly, thanks for reporting a bug. On section 5.5, I changed the line
+
+
+read_products_html="";
+
+to
+
+
+var read_products_html="";
+
+Would you try if it solved the error?
+
+Reply
+Nuno Monteiro
+October 18, 2017 at 1:52 am
+Hi Mike,
+I finished the tutorial, but somehow nothing happens whenever I click any of the “crud” buttons.
+My api is working properly…
+What am I missing?
+
+Reply
+Mike Dalisay
+October 20, 2017 at 9:39 pm
+Hi @disqus_rbPHKP5LhS, would you show us the error message in your console?
+
+Reply
+disqus_7nVxUoyUO5
+October 5, 2017 at 12:38 am
+read.php is not include, only buying the code?
+
+Reply
+Mike Dalisay
+October 12, 2017 at 2:44 pm
+You can always get it for free, if you follow our tutorial here: https://www.codeofaninja.com/2017/02/create-simple-rest-api-in-php.html
+
+Reply
+Phương Linh
+July 19, 2017 at 9:20 pm
+Thank you very much. It helped me a lot.
+
+Reply
+Mike Dalisay
+July 19, 2017 at 9:24 pm
+You’re welcome @disqus_TiIW6HtEPB ! Please subscribe for more helpful tutorials, see https://www.codeofaninja.com/subscribe
+
+Reply
+Mike Dalisay
+June 26, 2017 at 4:32 am
+HI @prabowoagung, make sure your update-product.js file exists in the /app/products/ directory.
+
+Reply
+Robert
+June 26, 2017 at 3:19 am
+Hello is section 5.3 a rebus? :-)
+kindly: at bottom of which section do you mean? Bottom of 5.1 or bottom of 5.2?
+
+5.6 where do you mean to place the table code?
+
+Thank you
+
+Reply
+Mike Dalisay
+June 26, 2017 at 5:34 am
+Hi @Corsari , It means bottom of section 5.1. I made the changes in section 5.1 and 5.3
+
+Sorry for the confusion, I try my best not to depend on section numbers because they can be changed anytime. Section numbers will only guide you through the steps.
+
+Reply
+Robert
+June 26, 2017 at 2:27 pm
+Hello Mike!
+Thank you for claryfing
+
+brad willy
+January 17, 2018 at 3:19 am
+Yeah I cannot figure out where to place the code in these sections.
+
+Mike Dalisay
+January 22, 2018 at 7:56 am
+Hi @bradwilly, I made some changes in sections 5.1 to 5.2, would you check it out and tell me if it is still confusing to you?
+
+Sara Mortada
+May 27, 2017 at 2:07 pm
+Can you please handle how to upload an image in this tutorial, Thank you
+
+Reply
+Mike Dalisay
+May 29, 2017 at 8:05 am
+Hi @saramortada , we will add this feature in LEVEL 3 source code. Thanks for the suggestion!
+
+Reply
+Nikhil Khandave
+April 29, 2017 at 12:25 am
+Hello Mike,
+I am getting the error on section 6.10, i have attached the screenshot of following code and result.
+
+https://uploads.disquscdn.com/images/6420a6a6177e4e878114a3eead26b1d1ac3aa8b84df3cecd589280f70616a2eb.png https://uploads.disquscdn.com/images/9bf0e5eb72e2601b4d0a4770d65c03338f07adfd72bcf6d26682268c00ee6248.png https://uploads.disquscdn.com/images/ebb0349831542a5f503f3c0f0271c4e1e0a636ccff50721acdd1371e4e56f5da.png https://uploads.disquscdn.com/images/7e6e10691ceb565c34c3fad8f52cc37e0e32560d5a6295db0b677a10a05098ff.png
+
+Reply
+Mike Dalisay
+May 3, 2017 at 12:24 pm
+Hi @@nikhilkhandave , it looks like your JSON is not properly formatted. Make sure you carefully followed our PHP Rest API tutorial https://www.codeofaninja.com/2017/02/create-simple-rest-api-in-php.html
+
+Also, put showProducts() function outside $(document).ready(…
+
+Reply
+Daniel Kool
+April 21, 2017 at 5:13 am
+Hi,
+Urgent help needed please as I’m confused here
+
+where exactly I have to place my index.html in the folder
+
+thank you
+
+Reply
+Mike Dalisay
+April 21, 2017 at 10:06 am
+Hi @disqus_JwoMupG9J3 , you’ll have to place it inside the directory (first level) of your project.
+
+Reply
+Daniel Kool
+April 22, 2017 at 12:47 am
+thanks for coming back. I don’t see anything on the html page when open it on local host
+
+Mike Dalisay
+April 22, 2017 at 10:14 am
+Would you post the error message seen in your console? Right click the page > inspect element > console tab.
+
+malberga
+March 13, 2017 at 12:14 am
+after update, delete or create… I am getting showProducts() not defined. it is not refreshing the product list. It does create a product and update and delete, showProduct() does fire after any of the CRUD functions. same error message showProduct() not defined.
+
+when you get to the search, the api does not have a search.php file, it was never addressed in the api tutorial.
+$.getJSON(“http://localhost/api/product/search.php
+
+Reply
+Mike Dalisay
+March 13, 2017 at 12:08 pm
+Hello @michaelalberga , thanks for pointing this out! We’ve added the “search” feature in section 9.0 of our API tutorial.
+
+About showProducts() not defined, are you sure you put showProducts() function in your read-products.js file?
+
+Reply
+Fabio Santos
+March 11, 2017 at 9:21 am
+Thanks for new update, awesome tutorial :)
+
+Reply
+Mike Dalisay
+March 11, 2017 at 11:27 am
+You’re welcome and thanks for the kind words @disqus_Dwdo4UCkWG!
+
+Please share our post to one of your friends if you have time. Thank you!
+
+Reply
+Fabio Santos
+March 11, 2017 at 7:21 pm
+I share now :)
+
+superei superei
+January 17, 2017 at 9:47 pm
+Hey, also a great tutorial same as the react one :)
+
+When would you preffer ajax/jquery only or combi it with react?
+
+Reply
+Mike Dalisay
+January 20, 2017 at 2:45 am
+Thank you @supereisuperei ! I don’t recommend using jQuery AJAX with react. You should use react + web services or rest apis instead.
+
+Reply
+Michael Torres
+December 12, 2016 at 8:26 am
+“7.4 Put the most important DIV tag
+Inside this “div” tag is where every main content of the page will be loaded. We put “page-content” as ID reference because its content will be dynamic. Add the following code after the code on section 5.3.”
+
+There is no section 5.3. Right?
+
+Reply
+Mike Dalisay
+December 12, 2016 at 2:57 pm
+Hello @disqus_XYgWU20FTX , I apologize for the confusion. We were updating this post and missed some references for different sections or steps. The sections you pointed out are now updated and fixed, let us know if there’s more.
+
+Reply
+John
+October 18, 2016 at 8:35 pm
+The steps are not very well organized and it may be confusing for others.
+
+Reply
+Mike Dalisay
+October 19, 2016 at 12:00 pm
+Hello @John, most people found the tutorial clear and organized. In your case, would you tell us which part it got you confused? We will improve the tutorial for you.
+
+Reply
+Mike Dalisay
+March 13, 2016 at 1:53 am
+Hello Rony, thanks for the kind words! About your concern, I’m unable to replicate your issue, would you send your code in my email mike@codeofaninja.com
+
+Reply
+Rony
+March 9, 2016 at 8:00 pm
+Hi,
+
+Thank you for the great and clear job done here.
+
+I think I came across a bug though! if you create one product it gets added fine, if you create a second product (Without refreshing the page) it gets added twice, the third product gets added three times, etc.
+Hope this makes sense.
+
+Thank you.
+
+Reply
+Mike Dalisay
+January 15, 2016 at 4:15 pm
+Hello @Goetz, there are two ways you can display it better in mobile. First, you can make less number of columns. Second is you put item data vertically like the attached pic
+
+Reply
+Goetz
+January 16, 2016 at 7:42 am
+Thanks, for your reply.
+Can it edit or delete while showing like that pic in a portable device..?
+
+Reply
+Goetz
+January 13, 2016 at 11:54 am
+In any level source code,
+Can we Read Products using mobile..?. Cause too many data to show in mobile…
+Whenever want to edit or delete while showing..
+Whether this support RWD..?
+
+Reply
+Oscar Fajardo
+November 21, 2015 at 6:54 pm
+Hello i have problems with ms sqlserver, can you hel me with any example?
+
+Reply
+Mike Dalisay
+December 1, 2015 at 10:07 am
+Hello @disqus_RfeK8U0CzO, sorry but we are not familiar with using ms sqlserver…
+
+Reply
+Dishant Ved
+October 23, 2015 at 10:14 am
+Is there Sorting facility by Clicking on Column name ?
+
+Reply
+Mike Dalisay
+October 24, 2015 at 6:50 am
+Hello @Dishant, thanks for dropping by! About your question, yes, the LEVEL 3 source code above does that.
+
+Reply
+Lars Schiffmann
+May 11, 2017 at 8:13 pm
+Sorry, where is Level 3?
+
+Mike Dalisay
+May 12, 2017 at 6:31 pm
+Hi @larsschiffmann , we recently updated the code and our tutorial above. The LEVEL 3 source code is currently under construction.
+
+Qaysar
+September 1, 2015 at 4:22 pm
+Hello,
+
+Can you please advise if the jQuery delete in the paid version is better than just an alert message?
+
+Thanks
+
+Reply
+Mike Dalisay
+September 1, 2015 at 4:41 pm
+Hello @Qaysar, thanks for reaching out! Would you tell us what is wrong with the alert message? How do you imagine it would be? Maybe we can code it for you. ~ Mike
+
+Reply
+Eluzai Yediael
+August 25, 2015 at 5:13 am
+A great Tutorial… Do you mind to make it greater by adding the changePageTitle() function? Thanks
+
+Reply
+Mike Dalisay
+August 25, 2015 at 4:15 pm
+Hello @eluzaiyediael, thanks for pointing this out! Please see the new section 6.5 for the changePageTitle() function’s code.
+
+Reply
+Leave a comment
+Your email address will not be published. Required fields are marked *
+
+Comment *
+
+Name *
+
+Email *
+
+Website
+
+This site uses Akismet to reduce spam. Learn how your comment data is processed.
+
+Post navigation
+Previous post
+
+How To Get Instagram Access Token in 3 Easy Steps?
+
+Next post
+
+How To Display Twitter Feed on Website Using PHP?
+
+Home
+Privacy Policy
+Terms of Use
+Code of Conduct
+CodeOfaNinja
+Proudly powered by WordPress.
+Back to top
+Dark Mode:
+Could not connect to the reCAPTCHA service. Please check your internet connection and reload to get a reCAPTCHA challenge.
